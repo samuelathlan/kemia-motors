@@ -1,16 +1,20 @@
 'use client'
 
+import Image from 'next/image'
+
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-slate-950">
-      {/* Logo badge - simplified SVG */}
-      <div className="mb-8 w-32 h-32 rounded-full bg-black border-4 border-black flex items-center justify-center relative overflow-hidden">
-        <div className="absolute inset-2 rounded-full bg-orange-700 flex items-center justify-center">
-          <div className="text-center">
-            <div className="text-white font-bold text-lg">KEMIA</div>
-            <div className="text-yellow-50 text-xs">MOTORS</div>
-          </div>
-        </div>
+      {/* Official Kemia Motors Logo */}
+      <div className="mb-8 w-40 h-40 flex items-center justify-center">
+        <Image
+          src="/kemia-logo.svg"
+          alt="Kemia Motors - Ride & Share"
+          width={160}
+          height={160}
+          priority
+          className="drop-shadow-lg"
+        />
       </div>
 
       <div className="text-center max-w-md">
