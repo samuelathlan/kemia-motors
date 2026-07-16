@@ -197,7 +197,8 @@ create index idx_motorcycles_member_id on motorcycles(member_id);
 create index idx_outings_cree_par on outings(cree_par);
 create index idx_outings_date_debut on outings(date_debut);
 create index idx_visited_places_outing_id on visited_places(outing_id);
-create index idx_visited_places_coords on visited_places using gist(ll_to_earth(latitude, longitude));
+-- create index idx_visited_places_coords on visited_places using gist(ll_to_earth(latitude, longitude)); -- PostGIS not available
+create index idx_visited_places_coords on visited_places(latitude, longitude);
 create index idx_charter_ordre on club_charter(ordre_affichage);
 
 -- Enable RLS
