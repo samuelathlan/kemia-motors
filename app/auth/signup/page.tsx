@@ -1,16 +1,13 @@
 'use client'
 
-export const dynamic = 'force-dynamic'
-
-import { Suspense } from 'react'
-import { useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase/client'
 
-function SignupContent() {
+export default function SignupPage() {
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const inviteCode = searchParams.get('code')
+  const [inviteCode, setInviteCode] = useState<string | null>(null)
+  const [loaded, setLoaded] = useState(false)
 
   const [pseudo, setPseudo] = useState('')
   const [nomAffiche, setNomAffiche] = useState('')
@@ -19,6 +16,16 @@ function SignupContent() {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    setInviteCode(params.get('code'))
+    setLoaded(true)
+  }, [])
+
+  if (!loaded) {
+    return <div className="min-h-screen flex items-center justify-center">Chargement...</div>
+  }
 
   if (!inviteCode) {
     return (
@@ -188,13 +195,5 @@ function SignupContent() {
         </div>
       </div>
     </div>
-  )
-}
-
-export default function SignupPage() {
-  return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Chargement...</div>}>
-      <SignupContent />
-    </Suspense>
   )
 }
