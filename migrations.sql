@@ -2,7 +2,7 @@
 
 -- Enable extensions
 create extension if not exists "uuid-ossp";
-create extension if not exists "pgvector";
+-- pgvector disabled (for V2+ semantic search)
 
 -- Create ENUM types
 create type member_role as enum ('membre', 'admin', 'super_admin');
@@ -132,6 +132,26 @@ create table if not exists outing_days (
   updated_at timestamp default now()
 );
 
+-- Visited places (créée avant anecdotes pour les foreign keys)
+create table if not exists visited_places (
+  id uuid primary key default uuid_generate_v4(),
+  outing_id uuid references outings(id) on delete set null,
+  outing_day_id uuid references outing_days(id) on delete set null,
+  nom varchar(500) not null,
+  description text,
+  latitude numeric(10,8) not null,
+  longitude numeric(11,8) not null,
+  date_visite timestamp,
+  type_lieu venue_type default 'autre',
+  pays varchar(255) not null,
+  region varchar(255),
+  lien_google_maps varchar(500),
+  lien_instagram varchar(500),
+  lien_google_drive varchar(500),
+  created_at timestamp default now(),
+  updated_at timestamp default now()
+);
+
 -- Anecdotes
 create table if not exists anecdotes (
   id uuid primary key default uuid_generate_v4(),
@@ -156,30 +176,6 @@ create table if not exists gpx_tracks (
   created_at timestamp default now(),
   updated_at timestamp default now()
 );
-
--- Visited places
-create table if not exists visited_places (
-  id uuid primary key default uuid_generate_v4(),
-  outing_id uuid references outings(id) on delete set null,
-  outing_day_id uuid references outing_days(id) on delete set null,
-  nom varchar(500) not null,
-  description text,
-  latitude numeric(10,8) not null,
-  longitude numeric(11,8) not null,
-  date_visite timestamp,
-  type_lieu venue_type default 'autre',
-  pays varchar(255) not null,
-  region varchar(255),
-  lien_google_maps varchar(500),
-  lien_instagram varchar(500),
-  lien_google_drive varchar(500),
-  created_at timestamp default now(),
-  updated_at timestamp default now()
-);
-
--- Fix the foreign key for anecdotes (needs visited_places defined first)
-alter table anecdotes add constraint anecdotes_visited_place_id_fkey
-  foreign key (visited_place_id) references visited_places(id) on delete cascade;
 
 -- Media links
 create table if not exists media_links (
