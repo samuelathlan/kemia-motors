@@ -46,10 +46,13 @@ class TestRunner {
     }
   }
 
-  async httpGet(path, headers = {}) {
-    const response = await fetch(`${BASE_URL}${path}`, { headers })
+  async httpGet(path, headers = {}, followRedirects = false) {
+    const response = await fetch(`${BASE_URL}${path}`, {
+      headers,
+      redirect: followRedirects ? 'follow' : 'manual'
+    })
     const text = await response.text()
-    return { status: response.status, headers: response.headers, text }
+    return { status: response.status, headers: response.headers, text, redirected: response.redirected, url: response.url }
   }
 
   async setup() {
@@ -159,10 +162,14 @@ class TestRunner {
 
     for (const route of protectedRoutes) {
       await this.test(`${route.name} (${route.path}) is protected`, async () => {
-        const { status } = await this.httpGet(route.path)
-        if (status === 200) throw new Error('Route is not protected!')
-        if (status !== 307 && status !== 308 && status !== 404) {
-          console.warn(`  Note: Status ${status} for ${route.path}`)
+        const { status, headers } = await this.httpGet(route.path)
+        // Protected routes should redirect (307/308) or return 404 if route doesn't exist
+        const isProtected = (status === 307 || status === 308) || (status === 404)
+        if (status === 200) throw new Error('Route is not protected! Returns 200 OK')
+        if (!isProtected) throw new Error(`Unexpected status: ${status}`)
+        // Verify redirect location
+        if ((status === 307 || status === 308) && !headers.get('location')?.includes('login')) {
+          throw new Error('Redirect location is not /auth/login')
         }
       })
     }
