@@ -1,0 +1,4 @@
+# Supabase configuration
+[project]
+# Your project ID
+# This is used when pushing migrations
