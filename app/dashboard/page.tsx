@@ -314,6 +314,16 @@ export default function DashboardPage() {
           </div>
         </div>
 
+        {/* Admin Panel Link (if admin) */}
+        {(member.role === 'admin' || member.role === 'super_admin') && (
+          <a
+            href="/admin"
+            className="block w-full py-3 px-4 rounded-lg border border-orange-600 text-orange-400 text-center hover:bg-orange-600/10 transition mb-4"
+          >
+            ⚙️ Panneau d'administration
+          </a>
+        )}
+
         {/* Logout Button */}
         <button
           onClick={async () => {
