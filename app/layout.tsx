@@ -15,6 +15,12 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Kemia Motors - Ride & Share",
   description: "Club moto - Sorties, histoire et visites",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Kemia Motors",
+  },
 };
 
 export default function RootLayout({

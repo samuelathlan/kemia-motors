@@ -1,0 +1,32 @@
+{
+  "name": "Kemia Motors - Ride & Share",
+  "short_name": "Kemia Motors",
+  "description": "Club moto - Sorties, histoire et visites",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#D9622B",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/kemia-logo.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/kemia-logo.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["travel", "lifestyle"],
+  "screenshots": [
+    {
+      "src": "/screenshot.png",
+      "sizes": "540x720",
+      "type": "image/png"
+    }
+  ]
+}

@@ -16,6 +16,7 @@ export default function ItineraryPage() {
   const [dayDetails, setDayDetails] = useState<Map<string, { anecdotes: Anecdote[]; places: VisitedPlace[] }>>(new Map())
   const [loading, setLoading] = useState(true)
   const [generatingSummary, setGeneratingSummary] = useState<string | null>(null)
+  const [exportingPDF, setExportingPDF] = useState(false)
   const [error, setError] = useState('')
 
   useEffect(() => {
@@ -102,6 +103,35 @@ export default function ItineraryPage() {
     }
   }
 
+  const handleExportPDF = async () => {
+    if (!outing) return
+
+    setExportingPDF(true)
+    try {
+      const res = await fetch('/api/export-pdf', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ outingId: id }),
+      })
+
+      if (!res.ok) throw new Error('Erreur export PDF')
+
+      const { html, filename } = await res.json()
+
+      // Trigger download
+      const blob = new Blob([html], { type: 'text/html' })
+      const link = document.createElement('a')
+      link.href = URL.createObjectURL(blob)
+      link.download = filename
+      link.click()
+      URL.revokeObjectURL(link.href)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Erreur lors de l\'export')
+    } finally {
+      setExportingPDF(false)
+    }
+  }
+
   if (loading) return <div className="min-h-screen p-4">Chargement...</div>
   if (!outing) return <div className="min-h-screen p-4">Sortie non trouvée</div>
 
@@ -115,10 +145,26 @@ export default function ItineraryPage() {
 
   return (
     <div className="min-h-screen p-4 pb-24">
-      <h1 className="text-3xl font-bold mb-2" style={{ color: '#E8D5B0' }}>
-        Itinéraire
-      </h1>
-      <p className="text-slate-400 mb-8">{outing.titre}</p>
+      <div className="flex items-start justify-between mb-8">
+        <div>
+          <h1 className="text-3xl font-bold mb-2" style={{ color: '#E8D5B0' }}>
+            Itinéraire
+          </h1>
+          <p className="text-slate-400">{outing.titre}</p>
+        </div>
+        {outing.type === 'roadtrip_multi_jours' && (
+          <button
+            onClick={handleExportPDF}
+            disabled={exportingPDF}
+            className="py-2 px-3 rounded-lg font-semibold text-sm transition text-white"
+            style={{
+              backgroundColor: exportingPDF ? '#475569' : '#D9622B',
+            }}
+          >
+            {exportingPDF ? '⏳ Export...' : '📥 Carnet PDF'}
+          </button>
+        )}
+      </div>
 
       {error && (
         <div className="p-4 rounded-lg bg-red-900/20 text-red-400 mb-6">
