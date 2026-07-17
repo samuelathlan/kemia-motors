@@ -27,6 +27,16 @@ export async function POST(req: Request) {
     const authUser = users?.find((u) => u.email === email)
     if (!authUser) throw new Error('Auth user not found')
 
+    // Reset password if provided
+    const { password } = await req.clone().json().catch(() => ({ password: null }))
+    if (password) {
+      const { error: pwError } = await supabase.auth.admin.updateUserById(authUser.id, {
+        password,
+        email_confirm: true,
+      })
+      if (pwError) throw new Error(`password: ${pwError.message}`)
+    }
+
     // Check if member exists
     const { data: existingMember } = await supabase
       .from('members')
