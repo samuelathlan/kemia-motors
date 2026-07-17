@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase/client'
 import Image from 'next/image'
 import Link from 'next/link'
+import Footer from '@/components/Footer'
 
 type HomeStats = {
   totalKm: number
@@ -51,10 +52,12 @@ export default function HomePage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-slate-950">
-      {/* Hero */}
-      <div
-        className="relative p-6 pt-12 pb-16 text-white text-center"
+    <div className="min-h-screen bg-slate-950 flex flex-col">
+      {/* Main Content */}
+      <div className="flex-1">
+        {/* Hero */}
+        <div
+          className="relative p-6 pt-12 pb-16 text-white text-center"
         style={{
           background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #2F4A38 100%)',
           borderBottom: '3px solid #D9622B',
@@ -178,26 +181,27 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* CTA Section */}
-      <div
-        className="p-6 text-center"
-        style={{
-          borderTop: '2px solid #D9622B',
-          background: 'linear-gradient(to bottom, transparent, rgba(31, 41, 55, 0.5))',
-        }}
-      >
-        <p className="text-slate-400 mb-4">Prêt à rouler avec nous?</p>
-        <Link
-          href="/invite"
-          className="inline-block px-8 py-3 rounded-lg font-semibold transition"
-          style={{ backgroundColor: '#D9622B', color: '#E8D5B0' }}
+        {/* CTA Section */}
+        <div
+          className="p-6 text-center"
+          style={{
+            borderTop: '2px solid #D9622B',
+            background: 'linear-gradient(to bottom, transparent, rgba(31, 41, 55, 0.5))',
+          }}
         >
-          Rejoindre Kemia Motors
-        </Link>
-        <p className="text-xs text-slate-500 mt-6">
-          © 2026 Kemia Motors • Ride & Share
-        </p>
+          <p className="text-slate-400 mb-4">Prêt à rouler avec nous?</p>
+          <Link
+            href="/invite"
+            className="inline-block px-8 py-3 rounded-lg font-semibold transition"
+            style={{ backgroundColor: '#D9622B', color: '#E8D5B0' }}
+          >
+            Rejoindre Kemia Motors
+          </Link>
+        </div>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }
