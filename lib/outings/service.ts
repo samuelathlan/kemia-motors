@@ -11,6 +11,21 @@ export async function getOutings() {
   return (data || []) as Outing[]
 }
 
+// Optimized: Get all outings with creator info in a single query (prevents N+1)
+export async function getOutingsWithCreators() {
+  const { data, error } = await supabase
+    .from('outings')
+    .select('*, creator:cree_par(id, pseudo, nom_affiche, avatar_storage_path)')
+    .order('date_debut', { ascending: false })
+
+  if (error) throw error
+
+  return (data || []).map((item: any) => ({
+    ...item,
+    creator: item.creator || null,
+  }))
+}
+
 export async function getOutingById(id: string) {
   const { data, error } = await supabase
     .from('outings')

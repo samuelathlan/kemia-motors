@@ -1,8 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { supabase } from '@/lib/supabase/client'
-import { getOutings } from '@/lib/outings/service'
+import { getOutingsWithCreators } from '@/lib/outings/service'
 import Link from 'next/link'
 import type { Outing, Member } from '@/lib/types'
 
@@ -14,21 +13,9 @@ export default function OutingsPage() {
   useEffect(() => {
     const fetchOutings = async () => {
       try {
-        const data = await getOutings()
-
-        // Fetch creator info for each outing
-        const outingsWithCreator = await Promise.all(
-          data.map(async (outing) => {
-            const { data: creator } = await supabase
-              .from('members')
-              .select('*')
-              .eq('id', outing.cree_par)
-              .single()
-            return { ...outing, creator: creator || null }
-          })
-        )
-
-        setOutings(outingsWithCreator)
+        // Optimized: single query with creator relationship (no N+1)
+        const data = await getOutingsWithCreators()
+        setOutings(data)
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Erreur de chargement')
       } finally {

@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase/client'
 import type { Member, Outing, VisitedPlace } from '@/lib/types'
 import Image from 'next/image'
+import Tooltip from '@/components/Tooltip'
 
 type DashboardStats = {
   memberKm: number
@@ -196,28 +197,36 @@ export default function DashboardPage() {
               href="/outings"
               className="p-4 rounded-lg bg-slate-900 border border-slate-700 hover:border-orange-600 transition text-center"
             >
-              <p className="text-2xl mb-2">🏍️</p>
+              <Tooltip text="Voir toutes les sorties du club">
+                <p className="text-2xl mb-2">🏍️</p>
+              </Tooltip>
               <p className="font-semibold text-sm">Sorties</p>
             </a>
             <a
               href="/note-du-jour"
               className="p-4 rounded-lg bg-slate-900 border border-slate-700 hover:border-orange-600 transition text-center"
             >
-              <p className="text-2xl mb-2">📝</p>
+              <Tooltip text="Ajouter une note rapide">
+                <p className="text-2xl mb-2">📝</p>
+              </Tooltip>
               <p className="font-semibold text-sm">Note du jour</p>
             </a>
             <a
               href="/import"
               className="p-4 rounded-lg bg-slate-900 border border-slate-700 hover:border-orange-600 transition text-center"
             >
-              <p className="text-2xl mb-2">📤</p>
+              <Tooltip text="Importer GPX/KML">
+                <p className="text-2xl mb-2">📤</p>
+              </Tooltip>
               <p className="font-semibold text-sm">Importer</p>
             </a>
             <a
               href="/map-regions"
               className="p-4 rounded-lg bg-slate-900 border border-slate-700 hover:border-orange-600 transition text-center"
             >
-              <p className="text-2xl mb-2">🗺️</p>
+              <Tooltip text="Voir la carte">
+                <p className="text-2xl mb-2">🗺️</p>
+              </Tooltip>
               <p className="font-semibold text-sm">Carte</p>
             </a>
           </div>
