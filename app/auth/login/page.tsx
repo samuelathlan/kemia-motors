@@ -99,6 +99,12 @@ export default function LoginPage() {
           >
             {loading ? 'Connexion en cours...' : 'Connexion'}
           </button>
+
+          <div className="text-center">
+            <a href="/auth/reset-password" className="text-xs text-orange-400 hover:underline">
+              Mot de passe oublié?
+            </a>
+          </div>
         </form>
 
         <div className="relative my-6">
