@@ -36,7 +36,7 @@ export default function Home() {
             Connexion
           </a>
           <a
-            href="/auth/signup"
+            href="/invite"
             className="btn-secondary block w-full"
           >
             Vous êtes invité ?
