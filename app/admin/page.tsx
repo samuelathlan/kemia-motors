@@ -60,6 +60,13 @@ export default function AdminPage() {
 
   const adminSections = [
     {
+      title: 'Invitations',
+      description: 'Générer et tracker les codes d\'invitation',
+      icon: '🎟️',
+      href: '/admin/invitations',
+      badge: 'Cooptation',
+    },
+    {
       title: 'Sorties',
       description: 'Créer, éditer, supprimer des sorties',
       icon: '🏍️',
