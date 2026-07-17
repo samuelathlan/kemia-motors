@@ -38,24 +38,23 @@ export async function POST(req: Request) {
       // Just update role
       const { error: updateError } = await supabase
         .from('members')
-        .update({ role: 'super_admin' })
+        .update({ role: 'super_admin', statut: 'membre_actif' })
         .eq('id', authUser.id)
 
-      if (updateError) throw updateError
+      if (updateError) throw new Error(`update: ${updateError.message}`)
     } else {
-      // Create new member
+      // Create new member (members table has no email column)
       const { error: insertError } = await supabase
         .from('members')
         .insert({
           id: authUser.id,
-          email,
           pseudo: email.split('@')[0],
           nom_affiche: email.split('@')[0],
           role: 'super_admin',
           statut: 'membre_actif',
         })
 
-      if (insertError) throw insertError
+      if (insertError) throw new Error(`insert: ${insertError.message}`)
     }
 
     return Response.json({
