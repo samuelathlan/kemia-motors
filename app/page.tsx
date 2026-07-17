@@ -17,36 +17,36 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-950">
       {/* Main Content */}
-      <div className="flex-1 flex flex-col items-center justify-center p-4 space-y-16">
+      <div className="flex-1 flex flex-col items-center justify-center p-4 space-y-8 md:space-y-12">
 
         {/* Hero Section */}
-        <div className="w-full max-w-3xl">
-          <div className="mb-12 w-48 h-48 flex items-center justify-center mx-auto">
+        <div className="w-full max-w-4xl px-2">
+          <div className="mb-6 md:mb-12 w-32 h-32 md:w-48 md:h-48 flex items-center justify-center mx-auto">
             <Image
               src="/kemia-logo.svg"
               alt="Kemia Motors"
               width={192}
               height={192}
               priority
-              className="drop-shadow-lg"
+              className="drop-shadow-lg w-full h-full"
             />
           </div>
 
           <div className="text-center space-y-6">
             <div>
-              <h1 className="text-5xl md:text-6xl font-bold mb-4 leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 md:mb-4 leading-tight">
                 <span style={{ color: '#D9622B' }}>RIDE</span>
-                <span className="text-slate-400 mx-2">•</span>
+                <span className="text-slate-400 mx-1 md:mx-2">•</span>
                 <span style={{ color: '#E8D5B0' }}>SHARE</span>
-                <span className="text-slate-400 mx-2">•</span>
+                <span className="text-slate-400 mx-1 md:mx-2">•</span>
                 <span style={{ color: '#2F4A38' }}>CARE</span>
               </h1>
-              <p className="text-2xl text-slate-300 mt-4">Club de moto feuj</p>
+              <p className="text-lg md:text-2xl text-slate-300 mt-2 md:mt-4">Club de moto feuj</p>
             </div>
 
-            <div className="pt-8">
-              <p className="text-slate-400 text-sm uppercase tracking-widest mb-8">Nos valeurs</p>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-12">
+            <div className="pt-6 md:pt-8">
+              <p className="text-slate-400 text-xs md:text-sm uppercase tracking-widest mb-6 md:mb-8">Nos valeurs</p>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 mb-8 md:mb-12">
                 {values.map((val) => (
                   <div
                     key={val.title}
@@ -59,12 +59,12 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="pt-4 border-t border-slate-800">
-              <p className="text-orange-400 text-sm font-semibold mb-8">
+            <div className="pt-6 md:pt-8 border-t border-slate-800 w-full">
+              <p className="text-orange-400 text-xs md:text-sm font-semibold mb-6 md:mb-8">
                 Entrée sur cooptation uniquement
               </p>
 
-              <div className="space-y-3 max-w-sm mx-auto">
+              <div className="space-y-3 max-w-sm mx-auto px-2">
                 <a
                   href="/auth/login"
                   className="btn-primary block w-full"
