@@ -44,8 +44,9 @@ export async function POST(req: Request) {
       email,
     })
   } catch (error) {
+    console.error('Promote admin error:', error)
     return Response.json(
-      { error: error instanceof Error ? error.message : 'Error' },
+      { error: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     )
   }
