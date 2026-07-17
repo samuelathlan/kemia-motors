@@ -30,7 +30,7 @@ export default function Home() {
 
         <div className="space-y-3">
           <a
-            href="/login"
+            href="/auth/login"
             className="btn-primary block w-full"
           >
             Connexion
