@@ -4,7 +4,7 @@ const SECRET = 'kemia-setup-2026'
 
 export async function POST(req: Request) {
   try {
-    const { secret, email } = await req.json()
+    const { secret, email, password } = await req.json()
 
     if (secret !== SECRET) {
       return Response.json({ error: 'Invalid secret' }, { status: 401 })
@@ -28,7 +28,6 @@ export async function POST(req: Request) {
     if (!authUser) throw new Error('Auth user not found')
 
     // Reset password if provided
-    const { password } = await req.clone().json().catch(() => ({ password: null }))
     if (password) {
       const { error: pwError } = await supabase.auth.admin.updateUserById(authUser.id, {
         password,
