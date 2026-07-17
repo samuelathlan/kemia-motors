@@ -200,6 +200,13 @@ export default function DashboardPage() {
               <p className="font-semibold text-sm">Sorties</p>
             </a>
             <a
+              href="/note-du-jour"
+              className="p-4 rounded-lg bg-slate-900 border border-slate-700 hover:border-orange-600 transition text-center"
+            >
+              <p className="text-2xl mb-2">📝</p>
+              <p className="font-semibold text-sm">Note du jour</p>
+            </a>
+            <a
               href="/import"
               className="p-4 rounded-lg bg-slate-900 border border-slate-700 hover:border-orange-600 transition text-center"
             >
@@ -212,13 +219,6 @@ export default function DashboardPage() {
             >
               <p className="text-2xl mb-2">🗺️</p>
               <p className="font-semibold text-sm">Carte</p>
-            </a>
-            <a
-              href="/motorcycles"
-              className="p-4 rounded-lg bg-slate-900 border border-slate-700 hover:border-orange-600 transition text-center"
-            >
-              <p className="text-2xl mb-2">🏍️</p>
-              <p className="font-semibold text-sm">Motos</p>
             </a>
           </div>
         </div>
