@@ -1,6 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase/client'
 
+// HTML escape to prevent XSS
+function escapeHtml(text: string | null | undefined): string {
+  if (!text) return ''
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { outingId } = await request.json()
@@ -50,7 +61,7 @@ export async function POST(request: NextRequest) {
       </style>
     </head>
     <body>
-      <h1>${outing.titre}</h1>
+      <h1>${escapeHtml(outing.titre)}</h1>
       <p class="info">
         ${new Date(outing.date_debut).toLocaleDateString('fr-FR', {
           weekday: 'long',
@@ -65,17 +76,17 @@ export async function POST(request: NextRequest) {
           year: 'numeric',
         }) : ''}
       </p>
-      <p>${outing.description || ''}</p>
+      <p>${escapeHtml(outing.description)}</p>
     `
 
     if (days && days.length > 0) {
       for (const day of days) {
         htmlContent += `
         <div class="day">
-          <h2>Jour ${day.numero_jour}${day.titre_du_jour ? ': ' + day.titre_du_jour : ''}</h2>
-          ${day.hebergement_nom ? `<p><strong>🏨 Hébergement:</strong> ${day.hebergement_nom}</p>` : ''}
-          ${day.notes_du_jour ? `<p><strong>📝 Notes:</strong> ${day.notes_du_jour}</p>` : ''}
-          ${day.resume_ia ? `<div class="summary"><strong>✨ Résumé IA:</strong><br>${day.resume_ia}</div>` : ''}
+          <h2>Jour ${day.numero_jour}${day.titre_du_jour ? ': ' + escapeHtml(day.titre_du_jour) : ''}</h2>
+          ${day.hebergement_nom ? `<p><strong>🏨 Hébergement:</strong> ${escapeHtml(day.hebergement_nom)}</p>` : ''}
+          ${day.notes_du_jour ? `<p><strong>📝 Notes:</strong> ${escapeHtml(day.notes_du_jour)}</p>` : ''}
+          ${day.resume_ia ? `<div class="summary"><strong>✨ Résumé IA:</strong><br>${escapeHtml(day.resume_ia)}</div>` : ''}
         </div>
         `
       }

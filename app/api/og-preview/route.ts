@@ -1,22 +1,76 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+// Whitelist allowed domains for SSRF prevention
+const ALLOWED_DOMAINS = [
+  'instagram.com',
+  'www.instagram.com',
+  'google.com',
+  'drive.google.com',
+]
+
+function isUrlSafe(urlString: string): boolean {
+  try {
+    const url = new URL(urlString)
+
+    // Block internal/private IPs
+    if (
+      url.hostname === 'localhost' ||
+      url.hostname === '127.0.0.1' ||
+      url.hostname === '0.0.0.0' ||
+      url.hostname.startsWith('192.168.') ||
+      url.hostname.startsWith('10.') ||
+      url.hostname.startsWith('172.')
+    ) {
+      return false
+    }
+
+    // Whitelist allowed domains
+    const isDomainAllowed = ALLOWED_DOMAINS.some((domain) =>
+      url.hostname === domain || url.hostname.endsWith('.' + domain)
+    )
+
+    if (!isDomainAllowed) {
+      return false
+    }
+
+    return true
+  } catch {
+    return false
+  }
+}
+
 export async function GET(request: NextRequest) {
   try {
     const url = request.nextUrl.searchParams.get('url')
 
     if (!url) {
-      return NextResponse.json(
-        { error: 'URL is required' },
-        { status: 400 }
-      )
+      return NextResponse.json({ error: 'URL is required' }, { status: 400 })
     }
 
-    // Fetch the page and extract OG image
+    // Security: validate URL
+    if (!isUrlSafe(url)) {
+      return NextResponse.json({ error: 'Invalid or blocked URL' }, { status: 403 })
+    }
+
+    // Fetch with timeout
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 5000)
+
     const response = await fetch(url, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (compatible; Kemia Motors)',
       },
+      signal: controller.signal,
     })
+
+    clearTimeout(timeout)
+
+    if (!response.ok) {
+      return NextResponse.json(
+        { error: 'Failed to fetch URL', image: null },
+        { status: response.status }
+      )
+    }
 
     const html = await response.text()
 
