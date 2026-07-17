@@ -45,10 +45,6 @@ export default function Home() {
               Vous êtes invité ?
             </a>
           </div>
-
-          <p className="text-slate-500 text-sm mt-8">
-            Application en développement • Phase 2 en cours
-          </p>
         </div>
       </div>
 
