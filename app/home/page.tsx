@@ -89,7 +89,7 @@ export default function HomePage() {
             Se connecter
           </Link>
           <Link
-            href="/invite"
+            href="/auth/signup"
             className="px-6 py-3 rounded-lg font-semibold border border-slate-400 hover:bg-slate-800 transition"
           >
             Rejoindre le club
@@ -188,7 +188,7 @@ export default function HomePage() {
       >
         <p className="text-slate-400 mb-4">Prêt à rouler avec nous?</p>
         <Link
-          href="/invite"
+          href="/auth/signup"
           className="inline-block px-8 py-3 rounded-lg font-semibold transition"
           style={{ backgroundColor: '#D9622B', color: '#E8D5B0' }}
         >
