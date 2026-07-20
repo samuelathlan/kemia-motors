@@ -99,6 +99,7 @@ export interface OutingDay {
 
 export interface Anecdote {
   id: string
+  outing_id: string | null
   outing_day_id: string | null
   visited_place_id: string | null
   member_id: string

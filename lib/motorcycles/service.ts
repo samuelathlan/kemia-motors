@@ -103,6 +103,11 @@ export async function deleteMotorcyclePhoto(
   if (error) throw error
 }
 
+export async function deleteMotorcycle(id: string) {
+  const { error } = await supabase.from('motorcycles').delete().eq('id', id)
+  if (error) throw error
+}
+
 export function getPhotoURL(storagePath: string): string {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   if (!supabaseUrl) throw new Error('SUPABASE_URL not set')
