@@ -120,7 +120,7 @@ export default function AdminOutingsPage() {
                     Éditer
                   </Link>
                   <Link
-                    href={`/admin/outings/${outing.id}/itinerary`}
+                    href={`/outings/${outing.id}/itinerary`}
                     className="px-3 py-2 rounded-lg bg-orange-900/30 text-orange-400 text-sm hover:bg-orange-900/50 transition"
                   >
                     🗺️ Itinéraire

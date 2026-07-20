@@ -180,7 +180,16 @@ export default function OutingDetailPage() {
         </div>
 
         {/* Day by day */}
-        <h2 className="text-xl font-bold mb-4" style={{ color: '#D9622B' }}>Le voyage</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-bold" style={{ color: '#D9622B' }}>Le voyage</h2>
+          <Link
+            href={`/outings/${id}/itinerary`}
+            className="text-sm font-semibold px-3 py-2 rounded-lg text-white"
+            style={{ backgroundColor: '#D9622B' }}
+          >
+            🛰️ Ajouter GPX, notes, anecdotes
+          </Link>
+        </div>
         <div className="space-y-4">
           {nonEmptyBlocks.length === 0 && <p className="text-slate-500 text-sm">Le détail du voyage sera bientôt disponible.</p>}
           {nonEmptyBlocks.map((b) => {
