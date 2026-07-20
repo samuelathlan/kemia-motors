@@ -293,6 +293,13 @@ export default function DashboardPage() {
           <p className="text-xs text-slate-400 uppercase tracking-widest mb-3">Explorer</p>
           <div className="space-y-3">
             <a
+              href="/overview"
+              className="block p-4 rounded-lg bg-slate-900 border border-slate-700 hover:border-orange-600 transition"
+            >
+              <p className="font-semibold mb-1">👁️ Vue d'ensemble</p>
+              <p className="text-xs text-slate-400">Toutes les sorties, stats GPX & Insta en un coup d'œil</p>
+            </a>
+            <a
               href="/timeline"
               className="block p-4 rounded-lg bg-slate-900 border border-slate-700 hover:border-orange-600 transition"
             >

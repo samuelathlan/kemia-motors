@@ -33,7 +33,7 @@ export async function proxy(request: NextRequest) {
   const hasSession = !!user
 
   // Protected routes - must be authenticated
-  const protectedRoutes = ['/dashboard', '/charter', '/outings', '/map', '/motorcycles', '/admin']
+  const protectedRoutes = ['/dashboard', '/charter', '/outings', '/map', '/motorcycles', '/admin', '/overview']
   const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route))
 
   if (isProtectedRoute && !hasSession) {

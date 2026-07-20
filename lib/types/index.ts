@@ -110,11 +110,13 @@ export interface Anecdote {
 export interface GPXTrack {
   id: string
   outing_id: string | null
+  outing_day_id: string | null
   member_id: string
   fichier_gpx_url: string | null
   lien_calimoto: string | null
   distance_km: number
   duree: string
+  duree_minutes: number | null
 }
 
 export interface VisitedPlace {
@@ -137,6 +139,7 @@ export interface VisitedPlace {
 export interface MediaLink {
   id: string
   outing_id: string | null
+  outing_day_id: string | null
   visited_place_id: string | null
   member_id: string
   url: string
