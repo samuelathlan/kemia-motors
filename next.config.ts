@@ -14,7 +14,19 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: "/_next/static/:path*",
+        // Turbopack chunk filenames are not guaranteed content-hashed here,
+        // so we must NOT cache them as immutable — a stale cached chunk
+        // silently masks every future deploy for returning visitors.
+        source: "/_next/static/chunks/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=0, must-revalidate",
+          },
+        ],
+      },
+      {
+        source: "/_next/static/media/:path*",
         headers: [
           {
             key: "Cache-Control",
