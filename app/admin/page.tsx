@@ -8,13 +8,16 @@ import type { Member } from '@/lib/types'
 import Link from 'next/link'
 
 export default function AdminPage() {
-  const { user } = useAuth()
+  const { user, loading: authLoading } = useAuth()
   const router = useRouter()
   const [member, setMember] = useState<Member | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
   useEffect(() => {
+    // Wait for the auth session to resolve before deciding anything
+    if (authLoading) return
+
     if (!user) {
       router.push('/auth/login')
       return
@@ -44,7 +47,7 @@ export default function AdminPage() {
     }
 
     checkAdmin()
-  }, [user, router])
+  }, [user, authLoading, router])
 
   if (loading) {
     return <div className="min-h-screen flex items-center justify-center">Chargement...</div>
